@@ -1,0 +1,35 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: PozitionsNFT
+    network: optimism
+    source:
+      address: "0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4"
+      abi: PozitionsNFT
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - OwnerChanged
+        - OwnerNominated
+        - TargetUpdated
+        - Transfer
+      abis:
+        - name: PozitionsNFT
+          file: ./abis/PozitionsNFT.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: OwnerChanged(address,address)
+          handler: handleOwnerChanged
+        - event: OwnerNominated(address)
+          handler: handleOwnerNominated
+        - event: TargetUpdated(address)
+          handler: handleTargetUpdated
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/pozitions-nft.ts

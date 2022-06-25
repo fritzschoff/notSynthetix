@@ -15,7 +15,13 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "codegen": "graph codegen",
+    "graph:build": "graph build",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ fritzschoff/pozitions",
+    "create-local": "graph create --node http://localhost:8020/ fritzschoff/pozitions",
+    "remove-local": "graph remove --node http://localhost:8020/ fritzschoff/pozitions",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 fritzschoff/pozitions"
   },
   "browserslist": {
     "production": [
@@ -30,6 +36,8 @@
     ]
   },
   "devDependencies": {
+    "@graphprotocol/graph-cli": "0.31.0",
+    "@graphprotocol/graph-ts": "0.27.0",
     "@nomiclabs/hardhat-ethers": "^2.0.6",
     "@nomiclabs/hardhat-etherscan": "^3.1.0",
     "@nomiclabs/hardhat-waffle": "^2.0.3",

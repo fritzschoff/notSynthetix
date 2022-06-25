@@ -1,4 +1,3 @@
-import React from 'react';
 import './App.css';
 import ConnectWallet from './components/ConnectWallet';
 import { Link, Route, Routes } from 'react-router-dom';
@@ -9,7 +8,7 @@ function App() {
   return (
     <div className="app">
       <header className="header">
-        <h1>We swear, we aren't synthetix</h1>
+        <h1>Pozitions</h1>
         <Link to="/">Home</Link>
         <Link to="gallery">Gallery</Link>
         <ConnectWallet />
