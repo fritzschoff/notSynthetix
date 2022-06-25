@@ -11,3 +11,12 @@
 .right {
   width: 50%;
 }
+
+.headerLandingPage {
+  font-size: 5rem;
+}
+
+.pozitionsHeader {
+  font-size: 2rem;
+  text-align: center;
+}

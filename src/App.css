@@ -1,14 +1,12 @@
 .app {
   text-align: center;
+  color: white;
 }
 
 .header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   padding: 8px;
-}
-
-.header h1 {
-  margin-right: auto;
+  background-color: #1e1e1e;
 }
