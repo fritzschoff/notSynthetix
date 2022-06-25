@@ -8,7 +8,54 @@ export default function LandingPage() {
     <>
       <section className="containerLandingPage">
         <div className="left">
-          <h1 className="headerLandingPage">Transferable Future Pozitions</h1>
+          <h1 className="headerLandingPage transferable">
+            Transferable &nbsp; Transferable &nbsp; Transferable &nbsp;
+            Transferable &nbsp; Transferable &nbsp; Transferable &nbsp;
+            Transferable &nbsp; Transferable &nbsp; Transferable &nbsp;
+            Transferable &nbsp; Transferable &nbsp; Transferable &nbsp;
+            Transferable &nbsp; Transferable &nbsp; Transferable &nbsp;
+            Transferable &nbsp; Transferable &nbsp; Transferable &nbsp;
+            Transferable &nbsp; Transferable &nbsp; Transferable &nbsp;
+            Transferable &nbsp; Transferable &nbsp; Transferable &nbsp;
+            Transferable &nbsp; Transferable &nbsp; Transferable &nbsp;
+            Transferable &nbsp; Transferable &nbsp; Transferable &nbsp;
+            Transferable &nbsp; Transferable &nbsp; Transferable &nbsp;
+            Transferable &nbsp; Transferable &nbsp; Transferable &nbsp;
+            Transferable &nbsp; Transferable &nbsp; Transferable &nbsp;
+            Transferable &nbsp; Transferable &nbsp; Transferable &nbsp;
+            Transferable &nbsp; Transferable &nbsp; Transferable &nbsp;
+            Transferable &nbsp; Transferable &nbsp; Transferable &nbsp;
+            Transferable &nbsp; Transferable &nbsp; Transferable &nbsp;
+          </h1>
+          <h1 className="headerLandingPage futures">
+            Futures &nbsp; Futures &nbsp; Futures &nbsp; Futures &nbsp; Futures
+            &nbsp; Futures &nbsp; Futures &nbsp; Futures &nbsp; Futures &nbsp;
+            Futures &nbsp; Futures &nbsp; Futures &nbsp; Futures &nbsp; Futures
+            &nbsp; Futures &nbsp; Futures &nbsp; Futures &nbsp; Futures &nbsp;
+            Futures &nbsp; Futures &nbsp; Futures &nbsp; Futures &nbsp; Futures
+            &nbsp; Futures &nbsp; Futures &nbsp; Futures &nbsp; Futures &nbsp;
+            Futures &nbsp; Futures &nbsp; Futures &nbsp; Futures &nbsp; Futures
+            &nbsp; Futures &nbsp; Futures &nbsp; Futures &nbsp; Futures &nbsp;
+            Futures &nbsp; Futures &nbsp; Futures &nbsp; Futures &nbsp; Futures
+            &nbsp; Futures &nbsp; Futures &nbsp; Futures &nbsp; Futures &nbsp;
+            Futures &nbsp; Futures &nbsp; Futures &nbsp; Futures &nbsp; Futures
+            &nbsp; Futures &nbsp;
+          </h1>
+          <h1 className="headerLandingPage pozitions">
+            Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp;
+            Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp;
+            Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp;
+            Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp;
+            Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp;
+            Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp;
+            Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp;
+            Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp;
+            Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp;
+            Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp;
+            Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp;
+            Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp;
+            Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp;
+          </h1>
           <Button
             onClick={() => {
               navigate('/gallery');
@@ -18,7 +65,7 @@ export default function LandingPage() {
           </Button>
         </div>
         <div className="right">
-          <img src="http://via.placeholder.com/360x640" />
+          <img src="http://via.placeholder.com/779x779" />
         </div>
       </section>
       <section className="pozitionsHeader">

@@ -26,6 +26,5 @@
 }
 
 .connectLink {
-  background-color: aquamarine;
-  color: black;
+  color: var(--primary);
 }

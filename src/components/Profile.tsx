@@ -1,8 +1,9 @@
-import BackButton from "./BackButton";
+import BackButton from './BackButton';
+import './Profile.css';
 
 export default function ProfilePage() {
   return (
-    <div>
+    <div className="profileContainer">
       <BackButton />
     </div>
   );

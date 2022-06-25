@@ -1,0 +1,78 @@
+.newPositionForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.newPositionForm input {
+  outline: 0;
+  border: 0;
+}
+
+.createPositionHeadline {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.newPositionForm input {
+  background: transparent;
+  border: 2px solid #b9bfc7;
+  color: #b9bfc7;
+  border-radius: 48px;
+  padding: 8px;
+  margin: 8px;
+}
+
+.longButton {
+  outline: 0;
+  border-radius: 24px;
+  border: 0;
+  width: 200px;
+  padding: 8px;
+  background: radial-gradient(
+    70.99% 70.99% at 35.8% 29.01%,
+    #9fff8f 0%,
+    #1abb00 100%
+  );
+}
+
+.shortButton {
+  outline: 0;
+  border-radius: 24px;
+  width: 200px;
+  border: 0;
+  padding: 8px;
+  background: radial-gradient(
+      70.99% 70.99% at 35.8% 29.01%,
+      #feb3b3 0%,
+      #ff0000 100%
+    ),
+    linear-gradient(270deg, #ffffff 0%, #b8b6cc 100%);
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+
+.leverageButton {
+  margin: 16px 0px;
+  background: transparent;
+  border: 2px solid #b9bfc7;
+  color: #b9bfc7;
+  border-radius: 48px;
+  padding: 4px 8px;
+}
+
+.submitButton {
+  background: linear-gradient(270deg, #f2f2f2 0%, #adadad 100%);
+  color: black;
+  border-radius: 48px;
+  outline: 0;
+  border: 0;
+  padding: 16px;
+}
