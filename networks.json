@@ -3,5 +3,10 @@
     "PozitionsNFT": {
       "address": "0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4"
     }
+  },
+  "optimism-kovan": {
+    "PozitionsNFT": {
+      "address": "0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4"
+    }
   }
 }
