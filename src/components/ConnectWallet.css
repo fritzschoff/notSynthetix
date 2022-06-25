@@ -2,3 +2,8 @@
   outline: 0;
   background: red;
 }
+
+.connectLink {
+  background-color: aquamarine;
+  color: black;
+}

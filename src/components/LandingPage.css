@@ -1,0 +1,13 @@
+.containerLandingPage {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.left {
+  width: 50%;
+}
+
+.right {
+  width: 50%;
+}

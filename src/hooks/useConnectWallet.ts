@@ -30,14 +30,6 @@ export function useConnectWallet() {
         // Get updated accounts and chainId
         const { accounts, chainId } = payload.params[0];
       });
-
-      connector.on("disconnect", (error, payload) => {
-        if (error) {
-          throw error;
-        }
-
-        // Delete connector
-      });
     }
   }, [connector]);
   return { connector, setConnector };

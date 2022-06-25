@@ -2,8 +2,9 @@ import WalletConnect from "@walletconnect/client";
 import { useConnectWallet } from "../hooks/useConnectWallet";
 import QRCodeModal from "@walletconnect/qrcode-modal";
 import "./ConnectWallet.css";
+import { Link } from "react-router-dom";
 
-export function ConnectWallet() {
+export default function ConnectWallet() {
   const { setConnector, connector } = useConnectWallet();
   const handleOnClick = () => {
     if (!connector) {
@@ -12,11 +13,26 @@ export function ConnectWallet() {
         qrcodeModal: QRCodeModal,
       });
       setConnector(connector);
+    } else {
     }
   };
-  return (
-    <button onClick={handleOnClick} className="connectWallet">
-      Connect Wallet
-    </button>
-  );
+
+  if (connector) {
+    return (
+      <Link to="/profile" className="connectLink">
+        {connector.accounts[0]
+          .substring(0, 5)
+          .concat("...")
+          .concat(
+            connector.accounts[0].substring(connector.accounts[0].length - 4)
+          )}
+      </Link>
+    );
+  } else {
+    return (
+      <button onClick={handleOnClick} className="connectWallet">
+        Connect Wallet
+      </button>
+    );
+  }
 }
