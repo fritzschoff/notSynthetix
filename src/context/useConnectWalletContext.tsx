@@ -14,11 +14,12 @@ interface WalletConnectContextType {
   setConnector: Dispatch<SetStateAction<WalletConnect | null>>;
 }
 
-const WalletConnectContext = createContext<unknown>(null);
+const WalletConnectContext = createContext<WalletConnectContextType>({
+  connector: null,
+  setConnector: () => null,
+});
 
-export const useConnectWallet = () => {
-  return useContext(WalletConnectContext) as WalletConnectContextType;
-};
+export const useConnectWallet = () => useContext(WalletConnectContext);
 
 export function ConnectWalletProvider({ children }: PropsWithChildren<{}>) {
   const [connector, setConnector] = useState<null | WalletConnect>(null);
