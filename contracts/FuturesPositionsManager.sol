@@ -12,6 +12,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./FuturesNFTPositionFactory.sol";
 import "./FuturesNFTPosition.sol";
 import "./interfaces/IFuturesMarket.sol";
+import "./interfaces/IAddressResolver.sol";
 
 /**
  * @dev Contract allows users to deposit sUSD and use it as margin for future positions via `Futures*`.
@@ -22,20 +23,22 @@ import "./interfaces/IFuturesMarket.sol";
  * TODO: Should we make this contract upgradeable?
  */
 contract FuturesPositionsManager is ReentrancyGuard, Ownable {
-  /// Constants ///
+  /// Storage Variables ///
 
   /**
-   * @dev sUSD is the margin token we provide to Synthetix to trade with.
-   *
-   * 0xaA5068dC2B3AADE533d3e52C6eeaadC6a8154c57
-   * TODO: I want to use the AddressResolver Synthetix has. Good idea?
+   * @dev Synthetix's `AddressResolver` to grab Synths and Market contracts.
    */
-  IERC20 public sUSDToken;
+  IAddressResolver private addressResolver;
+
+  /**
+   * @dev Margin token used for Synthetix Future positions. At the moment only sUSD is allowed.
+   */
+  IERC20 private marginToken;
 
   /**
    * @dev Factory to mint 1/1 NFTs to represent an open position on Synthetix Futures.
    */
-  FuturesNFTPositionFactory public positionFactory;
+  FuturesNFTPositionFactory private positionFactory;
 
   /// Events ///
 
@@ -60,9 +63,13 @@ contract FuturesPositionsManager is ReentrancyGuard, Ownable {
 
   /// Constructor ///
 
-  constructor (IERC20 _susd, FuturesNFTPositionFactory _positionFactory) {
-    sUSDToken = _susd;
+  constructor (IAddressResolver _addressResolver, FuturesNFTPositionFactory _positionFactory) {
+    addressResolver = _addressResolver;
     positionFactory = _positionFactory;
+
+    address sUSD = addressResolver.getAddress("ProxyERC20sUSD");
+    require(sUSD != address(0), "Ooops cannot find ProxyERC20sUSD");
+    marginToken = IERC20(sUSD);
   }
 
   /// Mutative Functions ///
@@ -72,10 +79,10 @@ contract FuturesPositionsManager is ReentrancyGuard, Ownable {
    */
   function deposit(uint _amount) external {
     require(_amount > 0, "Deposit amount is too small.");
-    require(sUSDToken.allowance(msg.sender, address(this)) >= _amount, "Approve sUSD token first!");
+    require(marginToken.allowance(msg.sender, address(this)) >= _amount, "Approve sUSD token first!");
 
     depositsByWalletAddress[msg.sender] += _amount;
-    bool isSuccess = sUSDToken.transferFrom(msg.sender, address(this), _amount);
+    bool isSuccess = marginToken.transferFrom(msg.sender, address(this), _amount);
     require(isSuccess, "Deposit failed, bad transfer.");
 
     emit Deposit(msg.sender, _amount);
@@ -91,7 +98,7 @@ contract FuturesPositionsManager is ReentrancyGuard, Ownable {
     require(depositsByWalletAddress[msg.sender] >= _amount, "Withdrawing more than available.");
 
     depositsByWalletAddress[msg.sender] -= _amount;
-    bool isSuccess = sUSDToken.transfer(_receiver, _amount);
+    bool isSuccess = marginToken.transfer(_receiver, _amount);
     require(isSuccess, "Withdraw failed, bad transfer.");
 
     emit Withdraw(msg.sender, _receiver, _amount);
@@ -140,6 +147,6 @@ contract FuturesPositionsManager is ReentrancyGuard, Ownable {
    * to be withdrawn or used in another position in the future but that is not currently implemented.
    */
   function closePosition(FuturesNFTPosition _position) external {
-
+    _position.closePosition();
   }
 }
