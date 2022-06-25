@@ -4,7 +4,6 @@ pragma solidity ^0.8.0;
 /// 3rd Party Libraries ///
 
 import "@openzeppelin/contracts/proxy/Clones.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 
 /// Local Imports ///
 
@@ -18,7 +17,7 @@ import "./FuturesNFTPosition.sol";
  *
  * _See https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/proxy/Clones.sol_
  */
-contract FuturesNFTPositionFactory is Ownable {
+contract FuturesNFTPositionFactory {
 
   using Clones for address;
 
@@ -32,14 +31,14 @@ contract FuturesNFTPositionFactory is Ownable {
   /**
    * @dev An array of all mintedPosition addresses.
    */
-  mapping (address => address[]) public allMintedPositions;
+  mapping (address => FuturesNFTPosition[]) public allMintedPositions;
 
   /// Events ///
 
   /**
-   * @dev Emitted when a minimal proxy is created, pointing to the `implementation` address.
+   * @dev Emitted when the NFT is 'cloned', effectively minted with the necessary attributes.
    */
-  event Clone(address minter, address position);
+  event Mint(address owner, IFuturesMarket market, uint margin, uint size, FuturesNFTPosition position);
 
   /**
    * @dev Emitted when the implementation is updated by the owner.
@@ -61,10 +60,15 @@ contract FuturesNFTPositionFactory is Ownable {
    *
    * IMPORTANT: `initialize` is not called here. It's expected the calling function will call `initialize` within
    * the same transaction as `clone`.
+   *
+   * TODO: How do I ensure that no one other than the FuturesPositionsManager can call this?
    */
-  function clone() external onlyOwner returns (address position) {
-    position = implementation.clone();
-    allMintedPositions[msg.sender].push(position);
-    emit Clone(msg.sender, position);
+  function clone(address _trader, IFuturesMarket _market, uint _margin, uint _size) public returns (FuturesNFTPosition position) {
+    position = FuturesNFTPosition(implementation.clone());
+    position.initialize(_market, _margin, _size);
+
+    allMintedPositions[_trader].push(position);
+
+    emit Mint(_trader, _market, _margin, _size, position);
   }
 }

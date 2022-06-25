@@ -5,7 +5,6 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 
 /// Project Imports ///
 
@@ -22,7 +21,7 @@ import "./interfaces/IAddressResolver.sol";
  *
  * TODO: Should we make this contract upgradeable?
  */
-contract FuturesPositionsManager is ReentrancyGuard, Ownable {
+contract FuturesPositionsManager is ReentrancyGuard {
   /// Storage Variables ///
 
   /**
@@ -40,6 +39,11 @@ contract FuturesPositionsManager is ReentrancyGuard, Ownable {
    */
   FuturesNFTPositionFactory private positionFactory;
 
+  /**
+   * @dev A hardcoded map of supported markets.
+   */
+  mapping (bytes32 => IFuturesMarket) private supportedMarkets;
+
   /// Events ///
 
   /**
@@ -53,9 +57,14 @@ contract FuturesPositionsManager is ReentrancyGuard, Ownable {
   event Deposit(address depositer, uint256 amount);
 
   /**
-   * @dev Emitted when a position is successfully opened or closed.
+   * @dev Emitted when a position is successfully opened.
    */
-  event Trade(address trader, uint256 margin, IFuturesMarket market, address position);
+  event PositionOpen(address trader, uint margin, uint size, IFuturesMarket market, FuturesNFTPosition position);
+
+  /**
+   * @dev Emitted when a position is successfully opened.
+   */
+  event PositionClose(address trader, IFuturesMarket market, FuturesNFTPosition position);
 
   /// State Variables ///
 
@@ -68,8 +77,20 @@ contract FuturesPositionsManager is ReentrancyGuard, Ownable {
     positionFactory = _positionFactory;
 
     address sUSD = addressResolver.getAddress("ProxyERC20sUSD");
-    require(sUSD != address(0), "Ooops cannot find ProxyERC20sUSD");
+    require(sUSD != address(0), "ProxyERC20sUSD not found.");
     marginToken = IERC20(sUSD);
+
+    bytes32[3] memory markets;
+    markets[0] = "FuturesMarketBTC";
+    markets[1] = "FuturesMarketETH";
+    markets[2] = "FuturesMarketLINK";
+
+    for (uint i; i < markets.length; i++) {
+      bytes32 name = markets[i];
+      address market = addressResolver.getAddress(name);
+      supportedMarkets[name] = IFuturesMarket(market);
+      require(market != address(0), "Market not found.");
+    }
   }
 
   /// Mutative Functions ///
@@ -77,13 +98,13 @@ contract FuturesPositionsManager is ReentrancyGuard, Ownable {
   /**
    * @dev Deposit sUSD into the manager to be used as margin when opening positions.
    */
-  function deposit(uint _amount) external {
+  function deposit(uint _amount) public {
     require(_amount > 0, "Deposit amount is too small.");
     require(marginToken.allowance(msg.sender, address(this)) >= _amount, "Approve sUSD token first!");
 
     depositsByWalletAddress[msg.sender] += _amount;
     bool isSuccess = marginToken.transferFrom(msg.sender, address(this), _amount);
-    require(isSuccess, "Deposit failed, bad transfer.");
+    require(isSuccess, "Deposit failed. Bad transfer.");
 
     emit Deposit(msg.sender, _amount);
   }
@@ -105,39 +126,31 @@ contract FuturesPositionsManager is ReentrancyGuard, Ownable {
   }
 
   /**
-   * @dev Add `_amount` margin to an existing `_position`.
-   *
-   * If the margin available in the manager is < the `_amount` specified, this function all request
-   * the delta from the caller's wallet. If the result amount is < `_amount` specified then this function
-   * will fail and nothing will be committed.
-   */
-  function depositMargin(FuturesNFTPosition _position, uint _amount) public {
-    require(_amount >= 0, "Deposit amount must be negative.");
-    _position.depositMargin(int(_amount));
-  }
-
-  /**
    * @dev Performs a trade on `_market` using `_amount` margin previously provided in the `FuturesPositionsManager`.
    *
    * This withdraws margin from within the `FuturesPositionsManager` but will revert if `_amount > deposit`. The
    * address of the newly minted NFT position is returned upon successful trade.
    *
-   * NOTE this function only supports opening positions and subsequently minting an NFT. It does not
-   * yet support the ability to close a position.
+   * The `_sizeDelta` is a derived value from a combination of proportion leverage and the price of the underlying
+   * asset for the specified market. Synthetix Futures does the hard work work validation these attributes before
+   * allowing a position to be created. This function will revert if Synthetix Futures reverts.
    */
-  function openPosition(uint _amount, IFuturesMarket _market) external nonReentrant returns (FuturesNFTPosition position) {
+  function openPosition(uint _margin, uint _size, bytes32 _market) public nonReentrant returns (FuturesNFTPosition position) {
     // Is this necessary? Should be double up on `require` or can I rely on `withdraw`?
-    require(_amount > 0, "Margin must be non-zero.");
-    require(depositsByWalletAddress[msg.sender] >= _amount, "Withdrawing more than available.");
+    require(_margin > 0, "Margin must be non-zero.");
+    require(depositsByWalletAddress[msg.sender] >= _margin, "Not enough margin.");
 
-    position = FuturesNFTPosition(positionFactory.clone());
-    withdraw(_amount, address(position));
+    IFuturesMarket market = supportedMarkets[_market];
+    require(address(market) != address(0), "Market not supported.");
 
-    depositMargin(position, _amount);
-    position.openPosition(int(_amount));
-    position.initialize(_market);
+    position = FuturesNFTPosition(positionFactory.clone(msg.sender, market, _size, _margin));
 
-    emit Trade(msg.sender, _amount, _market, address(position));
+    withdraw(_margin, address(position));
+
+    position.depositMargin(_margin);
+    position.openAndTransfer(msg.sender);
+
+    emit PositionOpen(msg.sender, _margin, _size, market, position);
   }
 
   /**
@@ -147,6 +160,15 @@ contract FuturesPositionsManager is ReentrancyGuard, Ownable {
    * to be withdrawn or used in another position in the future but that is not currently implemented.
    */
   function closePosition(FuturesNFTPosition _position) external {
-    _position.closePosition();
+    _position.closeAndBurn();
+    emit PositionClose(msg.sender, _position.market(), _position);
+  }
+
+  /**
+   * @dev Utility method combining `deposit` and `openPosition`.
+   */
+  function depositMarginAndOpenPosition(uint _margin, uint _size, bytes32 _market) public nonReentrant returns (FuturesNFTPosition position) {
+    deposit(_margin);
+    position = openPosition(_margin, _size, _market);
   }
 }

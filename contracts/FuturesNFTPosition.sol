@@ -5,6 +5,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 /// Local Imports ///
 
@@ -18,13 +19,23 @@ import "./interfaces/IFuturesMarket.sol";
  * move positions between wallets without closing, possibly incurring a loss, withdrawing margin, and
  * re-creating a new position.
  */
-contract FuturesNFTPosition is Initializable, ERC721 {
+contract FuturesNFTPosition is Initializable, ERC721, Ownable {
   /// State Variables ///
 
   /**
    * @dev The futures market we're operating in e.g. sBTC/sUSD.
    */
-  IFuturesMarket private operatingMarket;
+  IFuturesMarket public market;
+
+  /**
+   * @dev The initial amount of margin used for this position when opened.
+   */
+  uint public margin;
+
+  /**
+   * @dev The size size used when this position opened.
+   */
+  uint public size;
 
   /**
    * @dev Whether this position is open or closed.
@@ -41,23 +52,33 @@ contract FuturesNFTPosition is Initializable, ERC721 {
    * @dev Initializes this 1/1 NFT, passing and storing the necessary metadata for storage.
    *
    * This effectively mints the NFT. It's important to note that this NFT can only be minted once
-   * so it coincides well with `initialize`. Upon `initializing`,the NFT is minted and transferred.
+   * so it coincides well with `initialize`. Upon `initializing`, the NFT is minted and transferred.
    */
-  function initialize(IFuturesMarket _operatingMarket) public initializer {
-    operatingMarket = _operatingMarket;
+  function initialize(IFuturesMarket _market, uint _margin, uint _size) public initializer {
+    market = _market;
+    margin = _margin;
+    size = _size;
   }
 
-  function closePosition() public {
-    operatingMarket.closePosition();
-    isPositionOpen = false;
-  }
-
-  function openPosition(int _size) public {
-    operatingMarket.modifyPosition(_size);
+  function openAndTransfer(address _trader) public onlyOwner {
+    /// We're `int` casting here because contracts in Synthetix Futures account for negatives rather than splitting
+    /// the operation into 2 functions (positive is deposit, negative is withdraw).
+    ///
+    /// This is also true for `depositMargin`.
+    market.modifyPosition(int(size));
     isPositionOpen = true;
+
+    _mint(_trader, 0);
   }
 
-  function depositMargin(int _delta) public {
-    operatingMarket.transferMargin(_delta);
+  function closeAndBurn() public onlyOwner {
+    market.closePosition();
+    isPositionOpen = false;
+
+    _burn(0);
+  }
+
+  function depositMargin(uint _amount) public onlyOwner {
+    market.transferMargin(int(_amount));
   }
 }
