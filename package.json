@@ -49,6 +49,7 @@
     "@types/node": "^16.11.41",
     "@types/react": "16.14.0",
     "@types/react-dom": "16.8.0",
+    "@types/react-router-dom": "^5.3.3",
     "chai": "^4.3.6",
     "dotenv": "^16.0.1",
     "ethereum-waffle": "^3.4.4",

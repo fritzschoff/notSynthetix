@@ -10,7 +10,7 @@ function App() {
       <header className="header">
         <h1>Pozitions</h1>
         <Link to="/">Home</Link>
-        <Link to="gallery">Gallery</Link>
+        <Link to="/gallery">Gallery</Link>
         <ConnectWallet />
       </header>
 
