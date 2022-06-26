@@ -1,2 +1,2 @@
 export const KovanFuturesPositionsManager =
-  '0x04364263fD008F5a06a2D2ed666bcCFAe7dd1e7A';
+  '0x78fbe6B1DD9662543682f2f4158Bce858C38e21B';

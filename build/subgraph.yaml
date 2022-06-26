@@ -1,12 +1,12 @@
 specVersion: 0.0.4
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum
     name: PozitionsNFT
     network: optimism-kovan
     source:
-      address: '0x78fbe6B1DD9662543682f2f4158Bce858C38e21B'
+      address: "0x78fbe6B1DD9662543682f2f4158Bce858C38e21B"
       abi: PozitionsNFT
     mapping:
       kind: ethereum/events
@@ -17,10 +17,10 @@ dataSources:
         - PositionClose
       abis:
         - name: PozitionsNFT
-          file: ./src/abis/PozitionsNFT.json
+          file: PozitionsNFT/src/abis/PozitionsNFT.json
       eventHandlers:
         - event: PositionOpen(address,uint256,uint256,address,address)
           handler: handlePozitionMinted
         - event: PositionClose(address,address,address)
           handler: PozitionWithdrawal
-      file: ./subgraph/pozitions-nft.ts
+      file: PozitionsNFT/PozitionsNFT.wasm
