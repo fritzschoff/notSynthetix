@@ -11,7 +11,7 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class ExampleEntity extends Entity {
+export class PositionOpened extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -19,18 +19,18 @@ export class ExampleEntity extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save ExampleEntity entity without an ID");
+    assert(id != null, "Cannot save PositionOpened entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type ExampleEntity must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type PositionOpened must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("ExampleEntity", id.toString(), this);
+      store.set("PositionOpened", id.toString(), this);
     }
   }
 
-  static load(id: string): ExampleEntity | null {
-    return changetype<ExampleEntity | null>(store.get("ExampleEntity", id));
+  static load(id: string): PositionOpened | null {
+    return changetype<PositionOpened | null>(store.get("PositionOpened", id));
   }
 
   get id(): string {
@@ -42,30 +42,48 @@ export class ExampleEntity extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get count(): BigInt {
-    let value = this.get("count");
+  get position(): BigInt {
+    let value = this.get("position");
     return value!.toBigInt();
   }
 
-  set count(value: BigInt) {
-    this.set("count", Value.fromBigInt(value));
+  set position(value: BigInt) {
+    this.set("position", Value.fromBigInt(value));
   }
 
-  get owner(): Bytes {
-    let value = this.get("owner");
+  get size(): BigInt {
+    let value = this.get("size");
+    return value!.toBigInt();
+  }
+
+  set size(value: BigInt) {
+    this.set("size", Value.fromBigInt(value));
+  }
+
+  get margin(): BigInt {
+    let value = this.get("margin");
+    return value!.toBigInt();
+  }
+
+  set margin(value: BigInt) {
+    this.set("margin", Value.fromBigInt(value));
+  }
+
+  get trader(): Bytes {
+    let value = this.get("trader");
     return value!.toBytes();
   }
 
-  set owner(value: Bytes) {
-    this.set("owner", Value.fromBytes(value));
+  set trader(value: Bytes) {
+    this.set("trader", Value.fromBytes(value));
   }
 
-  get spender(): Bytes {
-    let value = this.get("spender");
+  get market(): Bytes {
+    let value = this.get("market");
     return value!.toBytes();
   }
 
-  set spender(value: Bytes) {
-    this.set("spender", Value.fromBytes(value));
+  set market(value: Bytes) {
+    this.set("market", Value.fromBytes(value));
   }
 }

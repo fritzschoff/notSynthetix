@@ -4,9 +4,9 @@ schema:
 dataSources:
   - kind: ethereum
     name: PozitionsNFT
-    network: optimism
+    network: optimism-kovan
     source:
-      address: '0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4'
+      address: '0x04364263fD008F5a06a2D2ed666bcCFAe7dd1e7A'
       abi: PozitionsNFT
     mapping:
       kind: ethereum/events
@@ -22,6 +22,6 @@ dataSources:
         - name: PozitionsNFT
           file: ./src/abis/PozitionsNFT.json
       eventHandlers:
-        - event: PozitionMinted(indexed address,indexed address,uint256)
+        - event: PositionOpen(address,uint256,uint256,address,address)
           handler: handlePozitionMinted
-      file: ./src/pozitions-nft.ts
+      file: ./subgraph/pozitions-nft.ts

@@ -75,7 +75,10 @@ function App() {
           <Link to="/gallery">Gallery</Link>
           {connector && (
             <div className="networkDisplay">
-              <img src="/op.png" width={24} height={24} />
+              {(parseChainId() === 'Optimism' ||
+                parseChainId() === 'Optimism Kovan') && (
+                <img src="/op.png" width={16} height={16} />
+              )}
               {parseChainId()}
             </div>
           )}
