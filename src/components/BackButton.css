@@ -10,6 +10,7 @@
 }
 
 .greyCircle {
+  padding: 4px;
   background-color: #d7d7d7;
   border-radius: 50%;
   width: 24px;

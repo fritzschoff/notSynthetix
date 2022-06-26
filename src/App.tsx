@@ -5,8 +5,21 @@ import LandingPage from './components/LandingPage';
 import ProfilePage from './components/Profile';
 import CreatePosition from './components/CreatePosition';
 import Footer from './components/Footer';
+import { useConnectWallet } from './context/useConnectWalletContext';
+import Pozition from './components/Pozition';
 
 function App() {
+  const { connector } = useConnectWallet();
+  const parseChainId = () => {
+    switch (connector?.chainId) {
+      case 10:
+        return 'Optimism';
+      case 69:
+        return 'Optimism Kovan';
+      default:
+        return 'Wrong Network - Use Optimism';
+    }
+  };
   return (
     <>
       <div className="app">
@@ -59,6 +72,7 @@ function App() {
           <Link to="/">Home</Link>
           <Link to="/create">New Pozition</Link>
           <Link to="/gallery">Gallery</Link>
+          {connector && <div className="networkDisplay">{parseChainId()}</div>}
           <ConnectWallet />
         </header>
 
@@ -70,6 +84,7 @@ function App() {
             element={<CreatePosition />}
           />
           <Route path="/profile" key="profile-page" element={<ProfilePage />} />
+          <Route path="/pozition/:id" element={<Pozition />} />
         </Routes>
         <Footer />
       </div>

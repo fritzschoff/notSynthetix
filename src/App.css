@@ -16,3 +16,9 @@
 .header h1 {
   font-family: 'Misto';
 }
+
+.networkDisplay {
+  border: 2px solid #b9bfc7;
+  border-radius: 48px;
+  padding: 4px 16px;
+}
