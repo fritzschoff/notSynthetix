@@ -73,7 +73,12 @@ function App() {
           <Link to="/">Home</Link>
           <Link to="/create">New Pozition</Link>
           <Link to="/gallery">Gallery</Link>
-          {connector && <div className="networkDisplay">{parseChainId()}</div>}
+          {connector && (
+            <div className="networkDisplay">
+              <img src="/op.png" width={24} height={24} />
+              {parseChainId()}
+            </div>
+          )}
           <ConnectWallet />
         </header>
         <main className="mainContent">
