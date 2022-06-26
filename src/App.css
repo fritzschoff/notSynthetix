@@ -21,7 +21,7 @@
 }
 
 .networkDisplay {
-  border: 2px solid #b9bfc7;
+  border: 2px solid var(--secondary);
   border-radius: 48px;
   padding: 4px 16px;
 }

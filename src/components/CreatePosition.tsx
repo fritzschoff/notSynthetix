@@ -7,18 +7,18 @@ import BackButton from './BackButton';
 
 export default function CreatePosition() {
   const [prices, setPrices] = useState<null | {
-    link: { usd: number };
-    bitcoin: { usd: number };
-    ethereum: { usd: number };
+    link: number;
+    bitcoin: number;
+    ethereum: number;
   }>();
   const {
     register,
     handleSubmit,
-    watch,
+    getValues,
     formState: { errors },
   } = useForm();
-  const [typeOfPosition, setTypeOfPosition] = useState<null | 'long' | 'short'>(
-    null
+  const [typeOfPosition, setTypeOfPosition] = useState<'long' | 'short'>(
+    'long'
   );
   const [leverage, setLeverage] = useState<1 | 2 | 5 | 10>(1);
   const { connector } = useConnectWallet();
@@ -59,7 +59,7 @@ export default function CreatePosition() {
           <option value={markets.FuturesMarketBTC}>BTC</option>
           <option value={markets.FuturesMarketLINK}>LINK</option>
         </select>
-        <input defaultValue="$ Enter Amount" {...register('amount')} />
+        <input placeholder="$ Enter Amount" {...register('amount')} />
         <div className="buttonContainer">
           <button
             className="longButton"
@@ -88,6 +88,7 @@ export default function CreatePosition() {
             10x
           </button>
         </div>
+
         <button onClick={handleSubmit(onSubmit)} className="submitButton">
           Submit
         </button>

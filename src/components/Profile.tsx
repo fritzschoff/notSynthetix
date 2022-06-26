@@ -8,13 +8,16 @@ export default function ProfilePage() {
   return (
     <div className="profileContainer">
       <BackButton />
-      <NFTPozition
+      {/*       <NFTPozition
         link="http://via.placeholder.com/779x779"
         onClick={() => {
           // TODO @MF add correct link
           navigate('/pozition/:address');
         }}
-      />
+      /> */}
+      <span>
+        Your gallery is empty. Create a new position to see them displayed here
+      </span>
       <button className="newPositionButton" onClick={() => navigate('/create')}>
         New Pozition
       </button>

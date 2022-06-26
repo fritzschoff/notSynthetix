@@ -27,4 +27,7 @@
 
 .connectLink {
   color: var(--primary);
+  border-radius: 48px;
+  border: 2px solid var(--secondary);
+  padding: 4px 8px;
 }
