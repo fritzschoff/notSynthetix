@@ -1,29 +1,44 @@
+import axios from 'axios';
+import { Contract } from 'ethers';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { graphQueryConfig } from '../constants/subgraph';
+import { useConnectWallet } from '../context/useConnectWalletContext';
 import BackButton from './BackButton';
 import NFTPozition from './NFTPozition';
 import './Profile.css';
+import abi from '../abis/FuturesNFTPosition.json';
 
 export default function ProfilePage() {
   const navigate = useNavigate();
-  const [image, setImage] = useState('');
+  const { provider, chainId } = useConnectWallet();
+  const [uris, setUris] = useState(['']);
   useEffect(() => {
-    fetch(
-      // TODO @MF fix that
-      'https://gateway.pinata.cloud/ipfs/QmVeqSkeE6CKnDf4LmACcaBQn6XbEzF1MK34w5DKpLLXEq'
-    ).then((data) => data.json().then((img) => setImage(img.image)));
+    axios(graphQueryConfig).then((res) => {
+      res.data.data.positionOpeneds.map((obj: { position: string }) => {
+        new Contract(obj.position, abi, provider[(chainId as 69 | 10) || 69]!)
+          .tokenURI(1)
+          .then((uri: string) => {
+            axios({ method: 'GET', url: uri }).then((obj: any) => {
+              setUris((state) => [...state, obj.data.image]);
+            });
+          });
+      });
+    });
   }, []);
   return (
     <div className="profileContainer">
-      {image ? (
-        <NFTPozition
-          link={image}
-          onClick={() =>
-            navigate(
-              '/pozition/'.concat(image.split('/')[image.split('/').length - 1])
-            )
-          }
-        />
+      {uris ? (
+        uris.map((uri) => {
+          <NFTPozition
+            link={uri}
+            onClick={() =>
+              navigate(
+                '/pozition/'.concat(uri.split('/')[uri.split('/').length - 1])
+              )
+            }
+          />;
+        })
       ) : (
         <>
           <div
@@ -42,7 +57,7 @@ export default function ProfilePage() {
         </>
       )}
 
-      {!image && (
+      {!uris.length && (
         <button
           className="newPositionButton"
           onClick={() => navigate('/create')}
