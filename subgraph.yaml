@@ -20,7 +20,7 @@ dataSources:
         - Transfer
       abis:
         - name: PozitionsNFT
-          file: ./abis/PozitionsNFT.json
+          file: ./src/abis/PozitionsNFT.json
       eventHandlers:
         - event: PozitionMinted(indexed address,indexed address,uint256)
           handler: handlePozitionMinted
