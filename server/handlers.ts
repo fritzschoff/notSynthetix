@@ -84,9 +84,9 @@ export const tokenHandler = () => {
 
     const pinnedMetadataResult = await pinata.pinJSONToIPFS(metadata, {});
 
-    res
-      .status(httpConstants.HTTP_STATUS_OK)
-      .json({ cid: pinnedMetadataResult.IpfsHash });
+    res.status(httpConstants.HTTP_STATUS_OK).json({
+      fullTokenURI: `https://https://gateway.pinata.cloud/ipfs/${pinnedMetadataResult.IpfsHash}`,
+    });
   });
 
   return router;
