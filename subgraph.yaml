@@ -8,14 +8,13 @@ dataSources:
     source:
       address: '0x78fbe6B1DD9662543682f2f4158Bce858C38e21B'
       abi: PozitionsNFT
-      startBlock: 4000000
+      startBlock: 4200000
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - handlePozitionMinted
-        - PositionClose
+        - PositionOpened
       abis:
         - name: PozitionsNFT
           file: ./src/abis/PozitionsNFT.json
@@ -23,5 +22,5 @@ dataSources:
         - event: PositionOpen(address,uint256,uint256,address,address)
           handler: handlePozitionMinted
         - event: PositionClose(address,address,address)
-          handler: PozitionWithdrawal
+          handler: handlePozitionWithdrawal
       file: ./subgraph/pozitions-nft.ts

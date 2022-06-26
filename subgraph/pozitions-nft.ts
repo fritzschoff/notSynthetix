@@ -5,7 +5,7 @@ import {
 } from '../generated/PozitionsNFT/PozitionsNFT';
 import { BigInt } from '@graphprotocol/graph-ts';
 
-export function PozitionMinted(event: PositionOpen): void {
+export function handlePozitionMinted(event: PositionOpen): void {
   const position = new PositionOpened(
     event.params.trader.toString().concat(event.address.toString())
   );
@@ -16,7 +16,7 @@ export function PozitionMinted(event: PositionOpen): void {
   position.save();
 }
 
-export function PozitionWithdrawal(event: PositionClose): void {
+export function handlePozitionWithdrawal(event: PositionClose): void {
   const position = PositionOpened.load(
     event.params.trader.toString().concat(event.address.toString())
   );
