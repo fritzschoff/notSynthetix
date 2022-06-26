@@ -31,8 +31,10 @@
     ]
   },
   "scripts": {
-    "start": "node ./build/index.js",
-    "build": "tsc -p tsconfig-node.json && cp -r ./server/svgs ./build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "api:start": "node ./build/index.js",
+    "api:build": "tsc -p tsconfig-node.json && cp -r ./server/svgs ./build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "codegen": "graph codegen",
