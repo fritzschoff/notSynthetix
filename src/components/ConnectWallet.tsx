@@ -16,7 +16,7 @@ export default function ConnectWallet() {
     }
   };
 
-  if (connector) {
+  if (connector?.accounts.length) {
     return (
       <Link to="/profile" className="connectLink">
         {connector.accounts[0]

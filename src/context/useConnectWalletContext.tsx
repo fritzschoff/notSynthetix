@@ -8,7 +8,6 @@ import {
   useState,
 } from 'react';
 import WalletConnect from '@walletconnect/client';
-import WalletConnectProvider from '@walletconnect/web3-provider';
 import { providers } from 'ethers';
 
 interface WalletConnectContextType {
@@ -28,7 +27,7 @@ export const useConnectWallet = () => useContext(WalletConnectContext);
 export function ConnectWalletProvider({ children }: PropsWithChildren<{}>) {
   const [connector, setConnector] = useState<null | WalletConnect>(null);
   const provider = new providers.JsonRpcProvider(
-    '9428ac75c6694bf69d325e35e89bd266'
+    'https://optimism-mainnet.infura.io/v3/9428ac75c6694bf69d325e35e89bd266'
   );
 
   useEffect(() => {
@@ -38,25 +37,6 @@ export function ConnectWalletProvider({ children }: PropsWithChildren<{}>) {
         // create new session
         connector.createSession();
       }
-
-      // Subscribe to connection events
-      connector.on('connect', (error, payload) => {
-        if (error) {
-          throw error;
-        }
-
-        // Get provided accounts and chainId
-        const { accounts, chainId } = payload.params[0];
-      });
-
-      connector.on('session_update', (error, payload) => {
-        if (error) {
-          throw error;
-        }
-
-        // Get updated accounts and chainId
-        const { accounts, chainId } = payload.params[0];
-      });
     }
   }, [connector]);
   return (

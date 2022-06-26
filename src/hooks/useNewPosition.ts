@@ -1,7 +1,5 @@
-import axios from 'axios';
 import { BigNumber, constants, Contract } from 'ethers';
 import { KovanFactoryManager, KovanSUSD } from '../constants/contracts';
-import { markets } from '../constants/markets';
 import { useConnectWallet } from '../context/useConnectWalletContext';
 import erc20 from '../abis/ERC20.json';
 import { Interface } from 'ethers/lib/utils';
@@ -9,14 +7,13 @@ import { Interface } from 'ethers/lib/utils';
 export default function useNewPosition() {
   const { connector, provider } = useConnectWallet();
   const calcDelta = (data: {
-    market: keyof typeof markets;
+    market: string;
     amount: string;
     side: 'long' | 'short';
     leverage: 1 | 2 | 5 | 10;
   }) => {
     if (data.market === 'FuturesMarketBTC') {
     }
-    console.log(data);
   };
 
   const approve = async () => {
@@ -24,19 +21,17 @@ export default function useNewPosition() {
       KovanFactoryManager,
       constants.MaxUint256,
     ]);
-    console.log(data);
-    const res = await connector?.signTransaction({
+    const res = await connector?.sendTransaction({
       to: KovanSUSD,
       data,
       from: connector.accounts[0],
     });
-    console.log(res);
     return res;
   };
   const hasAllowance = async () => {
     if (provider && connector?.accounts.length) {
       const contract = new Contract(KovanSUSD, erc20, provider);
-      const res: BigNumber = await contract.allowance(
+      const res: BigNumber = await contract.functions.allowance(
         connector.accounts[0],
         KovanFactoryManager
       );
