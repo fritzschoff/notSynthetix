@@ -103,7 +103,7 @@ export default function LandingPage() {
           </Button>
         </div>
         <div className="right">
-          <img src="/landing-page.svg" />
+          <img src="/hero.png" width={'100%'} height={700} />
         </div>
       </section>
       <section className="pozitionsHeader">

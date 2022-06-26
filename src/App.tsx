@@ -67,7 +67,7 @@ function App() {
           {connector && (
             <div className="networkDisplay">
               {(chainId === 10 || chainId === 69) && (
-                <img src="/op.png" width={16} height={16} />
+                <img src="/op.png" width={16} height={16} alt="optimism" />
               )}
               {chainId === 10
                 ? 'Optimism'
