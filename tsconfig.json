@@ -12,7 +12,7 @@
     ],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "module": "esnext",
+    "module": "commonjs",
     "outDir": "build",
     "declaration": true,
     "strict": true,
