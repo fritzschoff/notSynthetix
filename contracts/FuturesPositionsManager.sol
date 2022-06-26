@@ -148,7 +148,8 @@ contract FuturesPositionsManager is ReentrancyGuard {
     function openPosition(
         uint _margin,
         uint _size,
-        bytes32 _market
+        bytes32 _market,
+        string memory _fullTokenURI
     ) public returns (FuturesNFTPosition position) {
         // Is this necessary? Should be double up on `require` or can I rely on `withdraw`?
         require(_margin > 0, "Margin must be non-zero.");
@@ -157,7 +158,7 @@ contract FuturesPositionsManager is ReentrancyGuard {
         IFuturesMarket market = supportedMarkets[_market];
         require(address(market) != address(0), "Market not supported.");
 
-        position = FuturesNFTPosition(positionFactory.clone(msg.sender, market, _size, _margin));
+        position = FuturesNFTPosition(positionFactory.clone(msg.sender, market, _size, _margin, _fullTokenURI));
 
         withdraw(_margin, address(position));
 
@@ -184,10 +185,11 @@ contract FuturesPositionsManager is ReentrancyGuard {
     function depositMarginAndOpenPosition(
         uint _margin,
         uint _size,
-        bytes32 _market
+        bytes32 _market,
+        string memory _fullTokenURI
     ) external returns (FuturesNFTPosition position) {
         // TODO: This can probably be a lot more efficient. Depositing then immediately withdrawing.
         deposit(_margin);
-        position = openPosition(_margin, _size, _market);
+        position = openPosition(_margin, _size, _market, _fullTokenURI);
     }
 }

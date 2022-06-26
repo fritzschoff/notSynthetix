@@ -77,10 +77,11 @@ contract FuturesNFTPositionFactory {
         address _trader,
         IFuturesMarket _market,
         uint256 _margin,
-        uint256 _size
+        uint256 _size,
+        string memory _fullTokenURI
     ) public returns (FuturesNFTPosition position) {
         position = FuturesNFTPosition(implementation.clone());
-        position.initialize(_market, address(this), _margin, _size);
+        position.initialize(_market, address(this), _margin, _size, _fullTokenURI);
 
         allMintedPositions[_trader].push(position);
 
