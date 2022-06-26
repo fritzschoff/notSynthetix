@@ -20,65 +20,69 @@ import "./interfaces/IFuturesMarket.sol";
  * re-creating a new position.
  */
 contract FuturesNFTPosition is Initializable, ERC721, Ownable {
-  /// State Variables ///
+    /// State Variables ///
 
-  /**
-   * @dev The futures market we're operating in e.g. sBTC/sUSD.
-   */
-  IFuturesMarket public market;
+    /**
+    * @dev The futures market we're operating in e.g. sBTC/sUSD.
+    */
+    IFuturesMarket public market;
 
-  /**
-   * @dev The initial amount of margin used for this position when opened.
-   */
-  uint public margin;
+    /**
+    * @dev The initial amount of margin used for this position when opened.
+    */
+    uint public margin;
 
-  /**
-   * @dev The size size used when this position opened.
-   */
-  uint public size;
+    /**
+    * @dev The size size used when this position opened.
+    */
+    uint public size;
 
-  /**
-   * @dev Whether this position is open or closed.
-   */
-  bool public isPositionOpen;
+    /**
+    * @dev Whether this position is open or closed.
+    */
+    bool public isPositionOpen;
 
-  /// Constructor ///
+    /// Constructor ///
 
-  constructor() ERC721("Synthetix Futures Position", "SFP") { }
+    constructor() ERC721("Synthetix Futures Position", "SFP") { }
 
-  /// Mutative Functions ///
+    /// Mutative Functions ///
 
-  /**
-   * @dev Initializes this 1/1 NFT, passing and storing the necessary metadata for storage.
-   *
-   * This effectively mints the NFT. It's important to note that this NFT can only be minted once
-   * so it coincides well with `initialize`. Upon `initializing`, the NFT is minted and transferred.
-   */
-  function initialize(IFuturesMarket _market, uint _margin, uint _size) public initializer {
-    market = _market;
-    margin = _margin;
-    size = _size;
-  }
+    /**
+    * @dev Initializes this 1/1 NFT, passing and storing the necessary metadata for storage.
+    *
+    * This effectively mints the NFT. It's important to note that this NFT can only be minted once
+    * so it coincides well with `initialize`. Upon `initializing`, the NFT is minted and transferred.
+    */
+    function initialize(
+        IFuturesMarket _market,
+        uint _margin,
+        uint _size
+    ) public initializer {
+        market = _market;
+        margin = _margin;
+        size = _size;
+    }
 
-  function openAndTransfer(address _trader) public onlyOwner {
-    /// We're `int` casting here because contracts in Synthetix Futures account for negatives rather than splitting
-    /// the operation into 2 functions (positive is deposit, negative is withdraw).
-    ///
-    /// This is also true for `depositMargin`.
-    market.modifyPosition(int(size));
-    isPositionOpen = true;
+    function openAndTransfer(address _trader) public onlyOwner {
+        /// We're `int` casting here because contracts in Synthetix Futures account for negatives rather than splitting
+        /// the operation into 2 functions (positive is deposit, negative is withdraw).
+        ///
+        /// This is also true for `depositMargin`.
+        market.modifyPosition(int(size));
+        isPositionOpen = true;
 
-    _mint(_trader, 0);
-  }
+        _mint(_trader, 0);
+    }
 
-  function closeAndBurn() public onlyOwner {
-    market.closePosition();
-    isPositionOpen = false;
+    function closeAndBurn() public onlyOwner {
+        market.closePosition();
+        isPositionOpen = false;
 
-    _burn(0);
-  }
+        _burn(0);
+    }
 
-  function depositMargin(uint _amount) public onlyOwner {
-    market.transferMargin(int(_amount));
-  }
+    function depositMargin(uint _amount) public onlyOwner {
+        market.transferMargin(int(_amount));
+    }
 }

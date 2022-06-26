@@ -18,57 +18,72 @@ import "./FuturesNFTPosition.sol";
  * _See https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/proxy/Clones.sol_
  */
 contract FuturesNFTPositionFactory {
+    using Clones for address;
 
-  using Clones for address;
+    /// State Variables ///
 
-  /// State Variables ///
+    /**
+     * @dev The smart contract address where all FutureNFTPositions will point to.
+     */
+    address public implementation;
 
-  /**
-   * @dev The smart contract address where all FutureNFTPositions will point to.
-   */
-  address public implementation;
+    /**
+     * @dev An array of all mintedPosition addresses.
+     */
+    mapping(address => FuturesNFTPosition[]) public allMintedPositions;
 
-  /**
-   * @dev An array of all mintedPosition addresses.
-   */
-  mapping (address => FuturesNFTPosition[]) public allMintedPositions;
+    /// Events ///
 
-  /// Events ///
+    /**
+     * @dev Emitted when the NFT is 'cloned', effectively minted with the necessary attributes.
+     */
 
-  /**
-   * @dev Emitted when the NFT is 'cloned', effectively minted with the necessary attributes.
-   */
-  event Mint(address owner, IFuturesMarket market, uint margin, uint size, FuturesNFTPosition position);
+    event Mint(
+        address owner,
+        IFuturesMarket market,
+        uint256 margin,
+        uint256 size,
+        FuturesNFTPosition position
+    );
 
-  /**
-   * @dev Emitted when the implementation is updated by the owner.
-   *
-   * NOTE: Probably not needed right now but keeping this here.
-   */
-  event ImplementationChange(address oldImplementation, address newImplementation, address updater);
+    /**
+     * @dev Emitted when the implementation is updated by the owner.
+     *
+     * NOTE: Probably not needed right now but keeping this here.
+     */
+    event ImplementationChange(
+        address oldImplementation,
+        address newImplementation,
+        address updater
+    );
 
-  /// Constructor ///
+    /// Constructor ///
 
-  constructor (address _implementation) {
-    implementation = _implementation;
-  }
+    constructor(address _implementation) {
+        implementation = _implementation;
+    }
 
-  /// Mutative Functions ///
+    /// Mutative Functions ///
 
-  /**
-   * @dev Creates an exact copy of the `implementation` contract, following the minimal proxy pattern.
-   *
-   * IMPORTANT: `initialize` is not called here. It's expected the calling function will call `initialize` within
-   * the same transaction as `clone`.
-   *
-   * TODO: How do I ensure that no one other than the FuturesPositionsManager can call this?
-   */
-  function clone(address _trader, IFuturesMarket _market, uint _margin, uint _size) public returns (FuturesNFTPosition position) {
-    position = FuturesNFTPosition(implementation.clone());
-    position.initialize(_market, _margin, _size);
+    /**
+     * @dev Creates an exact copy of the `implementation` contract, following the minimal proxy pattern.
+     *
+     * IMPORTANT: `initialize` is not called here. It's expected the calling function will call `initialize` within
+     * the same transaction as `clone`.
+     *
+     * TODO: How do I ensure that no one other than the FuturesPositionsManager can call this?
+     */
+    function clone(
+        address _trader,
+        IFuturesMarket _market,
+        uint256 _margin,
+        uint256 _size
+    ) public returns (FuturesNFTPosition position) {
+        position = FuturesNFTPosition(implementation.clone());
+        position.initialize(_market, _margin, _size);
 
-    allMintedPositions[_trader].push(position);
+        allMintedPositions[_trader].push(position);
 
-    emit Mint(_trader, _market, _margin, _size, position);
-  }
+        emit Mint(_trader, _market, _margin, _size, position);
+    }
 }
