@@ -8,21 +8,28 @@ import {
   useState,
 } from 'react';
 import WalletConnect from '@walletconnect/client';
+import WalletConnectProvider from '@walletconnect/web3-provider';
+import { providers } from 'ethers';
 
 interface WalletConnectContextType {
   connector: WalletConnect | null;
   setConnector: Dispatch<SetStateAction<WalletConnect | null>>;
+  provider: providers.JsonRpcProvider | null;
 }
 
 const WalletConnectContext = createContext<WalletConnectContextType>({
   connector: null,
   setConnector: () => null,
+  provider: null,
 });
 
 export const useConnectWallet = () => useContext(WalletConnectContext);
 
 export function ConnectWalletProvider({ children }: PropsWithChildren<{}>) {
   const [connector, setConnector] = useState<null | WalletConnect>(null);
+  const provider = new providers.JsonRpcProvider(
+    '9428ac75c6694bf69d325e35e89bd266'
+  );
 
   useEffect(() => {
     if (connector) {
@@ -53,7 +60,9 @@ export function ConnectWalletProvider({ children }: PropsWithChildren<{}>) {
     }
   }, [connector]);
   return (
-    <WalletConnectContext.Provider value={{ connector, setConnector }}>
+    <WalletConnectContext.Provider
+      value={{ connector, setConnector, provider }}
+    >
       {children}
     </WalletConnectContext.Provider>
   );

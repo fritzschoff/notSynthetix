@@ -1,9 +1,13 @@
 import Button from './Button';
 import './LandingPage.css';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 export default function LandingPage() {
   const navigate = useNavigate();
+  const [nfts, setNfts] = useState(null);
+
+  useEffect(() => {}, []);
   return (
     <>
       <section className="containerLandingPage">
@@ -57,11 +61,45 @@ export default function LandingPage() {
             Pozitions &nbsp; Pozitions &nbsp; Pozitions &nbsp;
           </h1>
           <Button
+            className="exploreButton"
             onClick={() => {
               navigate('/gallery');
             }}
           >
             Explore
+            <svg
+              width="27"
+              height="28"
+              viewBox="0 0 27 28"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style={{ marginLeft: '16px' }}
+            >
+              <rect
+                x="14.3477"
+                y="1.34961"
+                width="17.8926"
+                height="5.03229"
+                transform="rotate(45 14.3477 1.34961)"
+                fill="#1E1E1E"
+              />
+              <rect
+                x="26.998"
+                y="14.001"
+                width="17.3334"
+                height="4.47314"
+                transform="rotate(135 26.998 14.001)"
+                fill="#1E1E1E"
+              />
+              <rect
+                x="25.6387"
+                y="15.1924"
+                width="23.8773"
+                height="2.10097"
+                transform="rotate(-180 25.6387 15.1924)"
+                fill="#1E1E1E"
+              />
+            </svg>
           </Button>
         </div>
         <div className="right">

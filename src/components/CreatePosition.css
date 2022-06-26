@@ -87,3 +87,20 @@
   border: 0;
   padding: 16px;
 }
+
+.priceWrapper {
+  max-width: 450px;
+  margin: 8px auto;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.price img {
+  margin-right: 8px;
+}
