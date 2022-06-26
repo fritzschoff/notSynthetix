@@ -10,17 +10,8 @@ import Pozition from './components/Pozition';
 import Gallery from './components/Gallery';
 
 function App() {
-  const { connector } = useConnectWallet();
-  const parseChainId = () => {
-    switch (connector?.chainId) {
-      case 10:
-        return 'Optimism';
-      case 69:
-        return 'Optimism Kovan';
-      default:
-        return 'Wrong Network - Use Optimism';
-    }
-  };
+  const { connector, chainId } = useConnectWallet();
+
   return (
     <>
       <div className="app">
@@ -75,11 +66,16 @@ function App() {
           <Link to="/gallery">Gallery</Link>
           {connector && (
             <div className="networkDisplay">
-              {(parseChainId() === 'Optimism' ||
-                parseChainId() === 'Optimism Kovan') && (
+              {(chainId === 10 || chainId === 69) && (
                 <img src="/op.png" width={16} height={16} />
               )}
-              {parseChainId()}
+              {chainId === 10
+                ? 'Optimism'
+                : chainId === 69
+                ? 'Optimism Kovan'
+                : chainId === 0
+                ? 'Connecting'
+                : 'Wrong Network - Use Optimism'}
             </div>
           )}
           <ConnectWallet />
