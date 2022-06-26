@@ -7,6 +7,7 @@ import CreatePosition from './components/CreatePosition';
 import Footer from './components/Footer';
 import { useConnectWallet } from './context/useConnectWalletContext';
 import Pozition from './components/Pozition';
+import Gallery from './components/Gallery';
 
 function App() {
   const { connector } = useConnectWallet();
@@ -75,17 +76,23 @@ function App() {
           {connector && <div className="networkDisplay">{parseChainId()}</div>}
           <ConnectWallet />
         </header>
-
-        <Routes>
-          <Route path="/" key="landing-page" element={<LandingPage />} />
-          <Route
-            path="/create"
-            key="landing-page"
-            element={<CreatePosition />}
-          />
-          <Route path="/profile" key="profile-page" element={<ProfilePage />} />
-          <Route path="/pozition/:id" element={<Pozition />} />
-        </Routes>
+        <main className="mainContent">
+          <Routes>
+            <Route path="/" key="landing-page" element={<LandingPage />} />
+            <Route
+              path="/create"
+              key="landing-page"
+              element={<CreatePosition />}
+            />
+            <Route path="/gallery" key="gallery-page" element={<Gallery />} />
+            <Route
+              path="/profile"
+              key="profile-page"
+              element={<ProfilePage />}
+            />
+            <Route path="/pozition/:id" element={<Pozition />} />
+          </Routes>
+        </main>
         <Footer />
       </div>
     </>

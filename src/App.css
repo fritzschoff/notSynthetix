@@ -1,7 +1,10 @@
 .app {
   text-align: center;
   color: white;
-  height: 99vh;
+}
+
+.mainContent {
+  min-height: 98vh;
 }
 
 .header {
