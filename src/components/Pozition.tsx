@@ -25,7 +25,7 @@ export default function Pozition() {
               contracts[
                 chainId as 10 | 69
               ].FuturesPositionContract?.interface.encodeFunctionData(
-                'safeTransferFrom',
+                'transferFrom',
                 [
                   (connector?.accounts[0],
                   '0xCc060DDBf7eBBCc7e61a91AC0FAf140Cc7C6692a',

@@ -1,31 +1,116 @@
-import { BigNumber, constants } from 'ethers';
+import axios from 'axios';
+import { BigNumber, constants, utils } from 'ethers';
+import { URLBACKENDNFT } from '../constants/nft-backend';
 import { useConnectWallet } from '../context/useConnectWalletContext';
 import { useContract } from '../context/useContract';
 
 export default function useNewPosition() {
   const { connector, provider } = useConnectWallet();
   const contracts = useContract();
-  const calcDelta = (data: {
+  const calcDelta = async (data: {
     market: string;
     amount: string;
     side: 'long' | 'short';
     leverage: 1 | 2 | 5 | 10;
-    price: {
-      link: number;
-      bitcoin: number;
-      ethereum: number;
-    };
+    link: number;
+    bitcoin: number;
+    ethereum: number;
   }) => {
     if (data.market === 'FuturesMarketBTC') {
-      const delta = (data.price.bitcoin / Number(data.amount)) * data.leverage;
+      const delta = (Number(data.amount) * data.leverage) / data.bitcoin;
+      const result = await axios({
+        method: 'POST',
+        url: URLBACKENDNFT.concat('token/generate-svg'),
+        data: {
+          side: data.side.toUpperCase(),
+          market: data.market,
+          wallet: connector?.accounts[0],
+          size: delta,
+          price: data.bitcoin,
+        },
+      });
+      const txData = contracts[
+        connector?.chainId as 10 | 69
+      ].FuturesPositionManager?.interface.encodeFunctionData(
+        'depositMarginAndOpenPosition',
+        [
+          utils.parseEther(data.amount),
+          utils.parseEther(delta.toString()),
+          utils.formatBytes32String(data.market),
+          result.data.fullTokenURI,
+        ]
+      );
+
+      connector?.sendTransaction({
+        to: contracts[connector?.chainId as 10 | 69].FuturesPositionManager
+          ?.address,
+        data: txData,
+        from: connector.accounts[0],
+      });
     }
     if (data.market === 'FuturesMarketETH') {
-      const delta = (data.price.ethereum / Number(data.amount)) * data.leverage;
+      const delta = (Number(data.amount) * data.leverage) / data.ethereum;
+      const result = await axios({
+        method: 'POST',
+        url: URLBACKENDNFT.concat('token/generate-svg'),
+        data: {
+          side: data.side.toUpperCase(),
+          market: data.market,
+          wallet: connector?.accounts[0],
+          size: delta,
+          price: data.ethereum,
+        },
+      });
+      const txData = contracts[
+        connector?.chainId as 10 | 69
+      ].FuturesPositionManager?.interface.encodeFunctionData(
+        'depositMarginAndOpenPosition',
+        [
+          utils.parseEther(data.amount),
+          utils.parseEther(delta.toString()),
+          utils.formatBytes32String(data.market),
+          result.data.fullTokenURI,
+        ]
+      );
+
+      connector?.sendTransaction({
+        to: contracts[connector?.chainId as 10 | 69].FuturesPositionManager
+          ?.address,
+        data: txData,
+        from: connector.accounts[0],
+      });
     }
-    if (data.market === 'FuturesMarketLINK') {
-      const delta = (data.price.link / Number(data.amount)) * data.leverage;
-      console.log(delta);
-    }
+
+    const delta = (Number(data.amount) * data.leverage) / data.link;
+    const result = await axios({
+      method: 'POST',
+      url: URLBACKENDNFT.concat('token/generate-svg'),
+      data: {
+        side: data.side.toUpperCase(),
+        market: data.market,
+        wallet: connector?.accounts[0],
+        size: delta,
+        price: data.link,
+      },
+    });
+    const txData = contracts[
+      connector?.chainId as 10 | 69
+    ].FuturesPositionManager?.interface.encodeFunctionData(
+      'depositMarginAndOpenPosition',
+      [
+        utils.parseEther(data.amount),
+        utils.parseEther(delta.toString()),
+        utils.formatBytes32String(data.market),
+        result.data.fullTokenURI,
+      ]
+    );
+
+    connector?.sendTransaction({
+      to: contracts[connector?.chainId as 10 | 69].FuturesPositionManager
+        ?.address,
+      data: txData,
+      from: connector.accounts[0],
+    });
   };
   const approve = async () => {
     if (connector) {

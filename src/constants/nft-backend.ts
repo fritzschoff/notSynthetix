@@ -1,8 +1,1 @@
-import { markets } from './markets';
-export interface GenerateNFTRequest {
-  market: keyof typeof markets;
-  size: number;
-  price: number;
-  side: 'long' | 'short';
-  wallet: string;
-}
+export const URLBACKENDNFT = 'https://pozitions-new-york-app.herokuapp.com/';

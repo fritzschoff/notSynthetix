@@ -9,7 +9,11 @@ export default function NFTPozition({
 }) {
   return (
     <div>
-      <img src={link} onClick={onClick} />
+      {onClick ? (
+        <img src={link} onClick={onClick} style={{ cursor: 'pointer' }} />
+      ) : (
+        <img src={link} />
+      )}
     </div>
   );
 }

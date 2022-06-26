@@ -9,6 +9,7 @@ export default function ProfilePage() {
   const [image, setImage] = useState('');
   useEffect(() => {
     fetch(
+      // TODO @MF fix that
       'https://gateway.pinata.cloud/ipfs/QmVeqSkeE6CKnDf4LmACcaBQn6XbEzF1MK34w5DKpLLXEq'
     ).then((data) => data.json().then((img) => setImage(img.image)));
   }, []);

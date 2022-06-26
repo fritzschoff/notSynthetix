@@ -1,7 +1,7 @@
 import { Contract } from 'ethers';
 import { createContext, PropsWithChildren, useContext } from 'react';
 import erc20 from '../abis//ERC20.json';
-import abi from '../abis/PozitionsNFT.json';
+import abi from '../abis/FuturesNFTPosition.json';
 import abiFactory from '../abis/FuturesNFTPositionFactory.json';
 import abiManager from '../abis/FuturesPositionsManager.json';
 
