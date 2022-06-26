@@ -1,4 +1,3 @@
-import './env';
 import { app } from './app';
 
 const PORT = process.env.HTTP_PORT ?? 8080;
