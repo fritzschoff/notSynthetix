@@ -3,6 +3,7 @@ import {
   PositionClose,
   PositionOpen,
 } from '../generated/PozitionsNFT/PozitionsNFT';
+import { BigInt } from '@graphprotocol/graph-ts';
 
 export function PozitionMinted(event: PositionOpen): void {
   const position = new PositionOpened(
@@ -20,5 +21,7 @@ export function PozitionWithdrawal(event: PositionClose): void {
     event.params.trader.toString().concat(event.address.toString())
   );
   if (position) {
+    position.margin = new BigInt(0);
+    position.save();
   }
 }

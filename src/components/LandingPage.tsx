@@ -65,7 +65,7 @@ export default function LandingPage() {
           </Button>
         </div>
         <div className="right">
-          <img src="http://via.placeholder.com/779x779" />
+          <img src="/landing-page.svg" />
         </div>
       </section>
       <section className="pozitionsHeader">

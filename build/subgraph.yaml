@@ -8,6 +8,7 @@ dataSources:
     source:
       address: "0x78fbe6B1DD9662543682f2f4158Bce858C38e21B"
       abi: PozitionsNFT
+      startBlock: 262194
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
