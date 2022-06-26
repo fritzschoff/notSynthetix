@@ -1,6 +1,7 @@
 .app {
   text-align: center;
   color: white;
+  height: 99vh;
 }
 
 .header {
@@ -9,6 +10,7 @@
   align-items: center;
   padding: 8px;
   background-color: #1e1e1e;
+  margin-bottom: 40px;
 }
 
 .header h1 {
