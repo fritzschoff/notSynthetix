@@ -1,20 +1,38 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext",
+      "es2020",
+      "esnext.asynciterable"
+    ],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "module": "commonjs",
+    "outDir": "build",
+    "declaration": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
+    "noImplicitAny": true,
     "moduleResolution": "node",
+    "strictNullChecks": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": false,
+    "useUnknownInCatchVariables": false,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strictPropertyInitialization": false,
+    "esModuleInterop": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "subgraph/pozitions-nft.ts"]
+  "include": ["src", "subgraph/pozitions-nft.ts", "./scripts", "./test", "./typechain", "./src/**/*.ts"],
+  "files": ["./hardhat.config.ts"]
 }
