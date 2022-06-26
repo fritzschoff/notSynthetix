@@ -185,7 +185,8 @@ contract FuturesPositionsManager is ReentrancyGuard {
         uint _margin,
         uint _size,
         bytes32 _market
-    ) public returns (FuturesNFTPosition position) {
+    ) external returns (FuturesNFTPosition position) {
+        // TODO: This can probably be a lot more efficient. Depositing then immediately withdrawing.
         deposit(_margin);
         position = openPosition(_margin, _size, _market);
     }

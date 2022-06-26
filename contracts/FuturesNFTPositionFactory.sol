@@ -38,7 +38,7 @@ contract FuturesNFTPositionFactory {
      * @dev Emitted when the NFT is 'cloned', effectively minted with the necessary attributes.
      */
 
-    event Mint(
+    event Clone(
         address owner,
         IFuturesMarket market,
         uint256 margin,
@@ -80,10 +80,10 @@ contract FuturesNFTPositionFactory {
         uint256 _size
     ) public returns (FuturesNFTPosition position) {
         position = FuturesNFTPosition(implementation.clone());
-        position.initialize(_market, _margin, _size);
+        position.initialize(_market, address(this), _margin, _size);
 
         allMintedPositions[_trader].push(position);
 
-        emit Mint(_trader, _market, _margin, _size, position);
+        emit Clone(_trader, _market, _margin, _size, position);
     }
 }

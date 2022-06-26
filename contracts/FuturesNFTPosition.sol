@@ -33,7 +33,7 @@ contract FuturesNFTPosition is Initializable, ERC721, Ownable {
     uint public margin;
 
     /**
-    * @dev The size size used when this position opened.
+    * @dev The size used when this position opened.
     */
     uint public size;
 
@@ -56,15 +56,19 @@ contract FuturesNFTPosition is Initializable, ERC721, Ownable {
     */
     function initialize(
         IFuturesMarket _market,
+        address _manager,
         uint _margin,
         uint _size
     ) public initializer {
         market = _market;
         margin = _margin;
         size = _size;
+
+        // FuturesPositionsManager is the only SC to interact with FuturesNFTPosition after creation.
+        // transferOwnership(_manager);
     }
 
-    function openAndTransfer(address _trader) public onlyOwner {
+    function openAndTransfer(address _trader) public {
         /// We're `int` casting here because contracts in Synthetix Futures account for negatives rather than splitting
         /// the operation into 2 functions (positive is deposit, negative is withdraw).
         ///
@@ -75,14 +79,14 @@ contract FuturesNFTPosition is Initializable, ERC721, Ownable {
         _mint(_trader, 0);
     }
 
-    function closeAndBurn() public onlyOwner {
+    function closeAndBurn() public {
         market.closePosition();
         isPositionOpen = false;
 
         _burn(0);
     }
 
-    function depositMargin(uint _amount) public onlyOwner {
+    function depositMargin(uint _amount) public {
         market.transferMargin(int(_amount));
     }
 }

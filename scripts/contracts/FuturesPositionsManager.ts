@@ -1,6 +1,6 @@
 import FuturesMarginVaultArtifact from "../../artifacts/contracts/FuturesPositionsManager.sol/FuturesPositionsManager.json";
 
 export const FuturesPositionsManager = {
-  address: "0xdBd4c0Cc423B868717d23cbe7EB04555A3976c6B",
+  address: "0x78fbe6B1DD9662543682f2f4158Bce858C38e21B",
   abi: FuturesMarginVaultArtifact.abi,
 };
