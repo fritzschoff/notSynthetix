@@ -3,11 +3,11 @@ pragma solidity ^0.8.0;
 
 /// 3rd Party Libraries ///
 
-import "@openzeppelin/contracts/proxy/Clones.sol";
+import '@openzeppelin/contracts/proxy/Clones.sol';
 
 /// Local Imports ///
 
-import "./FuturesNFTPosition.sol";
+import './FuturesNFTPosition.sol';
 
 /**
  * @dev Allows the creation of a more 1/1 FuturePosition NFTs to be transferred to `msg.sender`.
@@ -81,7 +81,13 @@ contract FuturesNFTPositionFactory {
         string memory _fullTokenURI
     ) public returns (FuturesNFTPosition position) {
         position = FuturesNFTPosition(implementation.clone());
-        position.initialize(_market, address(this), _margin, _size, _fullTokenURI);
+        position.initialize(
+            _market,
+            address(this),
+            _margin,
+            _size,
+            _fullTokenURI
+        );
 
         allMintedPositions[_trader].push(position);
 

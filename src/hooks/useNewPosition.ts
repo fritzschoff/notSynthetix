@@ -32,7 +32,7 @@ export default function useNewPosition() {
       const data = contracts[
         connector.chainId as 10 | 69
       ].sUSD?.interface.encodeFunctionData('approve', [
-        connector.accounts[0],
+        contracts[connector.chainId as 10 | 69].FuturesPositionManager?.address,
         constants.MaxUint256,
       ]);
       const res = await connector.sendTransaction({
@@ -51,7 +51,7 @@ export default function useNewPosition() {
       );
       const res: BigNumber = await contract.allowance(
         connector.accounts[0],
-        contracts[connector.chainId as 10 | 69].FuturesContract?.address
+        contracts[connector.chainId as 10 | 69].FuturesPositionManager?.address
       );
       return res.gt(0);
     }
