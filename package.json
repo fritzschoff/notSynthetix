@@ -30,8 +30,8 @@
     ]
   },
   "scripts": {
-    "start": "ts-node --transpile-only ./server/index.ts",
-    "build": "react-scripts build",
+    "start": "node ./build/index.js",
+    "build": "tsc -p tsconfig-node.json",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "codegen": "graph codegen",
