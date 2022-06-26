@@ -10,12 +10,21 @@ export default function useNewPosition() {
     amount: string;
     side: 'long' | 'short';
     leverage: 1 | 2 | 5 | 10;
+    price: {
+      link: number;
+      bitcoin: number;
+      ethereum: number;
+    };
   }) => {
     if (data.market === 'FuturesMarketBTC') {
+      const delta = (data.price.bitcoin / Number(data.amount)) * data.leverage;
     }
     if (data.market === 'FuturesMarketETH') {
+      const delta = (data.price.ethereum / Number(data.amount)) * data.leverage;
     }
     if (data.market === 'FuturesMarketLINK') {
+      const delta = (data.price.link / Number(data.amount)) * data.leverage;
+      console.log(delta);
     }
   };
   const approve = async () => {

@@ -21,7 +21,7 @@ export default function CreatePosition() {
   );
   const [leverage, setLeverage] = useState<1 | 2 | 5 | 10>(1);
   const onSubmit = (data: any) => {
-    calcDelta({ ...data, leverage, side: typeOfPosition });
+    calcDelta({ ...data, leverage, side: typeOfPosition, ...prices });
   };
 
   useEffect(() => {
@@ -80,6 +80,7 @@ export default function CreatePosition() {
           <option value={markets.FuturesMarketETH}>ETH</option>
           <option value={markets.FuturesMarketBTC}>BTC</option>
         </select>
+        <span>sUSD</span>
         <input placeholder="$ Enter Amount" {...register('amount')} />
         <div className="buttonContainer">
           <button

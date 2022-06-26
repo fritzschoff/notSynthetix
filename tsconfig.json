@@ -3,13 +3,7 @@
     "target": "es5",
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext",
-      "es2020",
-      "esnext.asynciterable"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext", "es2020", "esnext.asynciterable"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "module": "commonjs",
@@ -44,7 +38,5 @@
     "./typechain",
     "./src/**/*.ts"
   ],
-  "files": [
-    "./hardhat.config.ts"
-  ]
+  "files": ["./hardhat.config.ts"]
 }
