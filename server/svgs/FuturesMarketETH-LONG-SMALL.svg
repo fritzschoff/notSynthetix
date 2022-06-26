@@ -797,7 +797,7 @@
 <path d="M95.6822 235.354L112.206 235.901" stroke="url(#paint66_linear_53_1281)" stroke-linejoin="round"/>
 </g>
 <g style="mix-blend-mode:soft-light">
-<text transform="matrix(0.5 0.866025 -1 -7.53798e-05 124.311 41.9143)" fill="white" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="12" letter-spacing="0em"><tspan x="0" y="12.6553">id - 19290684652</tspan></text>
+<text transform="matrix(0.5 0.866025 -1 -7.53798e-05 124.311 41.9143)" fill="white" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="12" letter-spacing="0em"><tspan x="0" y="12.6553">addr - {PLACEHOLDER_ADDR}</tspan></text>
 </g>
 <text transform="matrix(0.5 0.866025 -0.985556 0.16935 267.12 319.329)" fill="white" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="13" font-weight="bold" letter-spacing="0em"><tspan x="0" y="14.0432">LONG</tspan></text>
 </g>

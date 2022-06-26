@@ -40,7 +40,7 @@
 </g>
 <g clip-path="url(#clip3_57_2326)">
 <g style="mix-blend-mode:overlay">
-<text transform="translate(197 204.752) rotate(-45)" fill="white" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="12" letter-spacing="0em"><tspan x="0" y="12.6553">addr &#x2014;{ADDR_PLACEHOLDER}</tspan></text>
+<text transform="translate(197 204.752) rotate(-45)" fill="white" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="12" letter-spacing="0em"><tspan x="0" y="12.6553">addr &#x2014;{PLACEHOLDER_ADDR}</tspan></text>
 </g>
 <text transform="matrix(-0.761516 -0.648146 0.714619 -0.699514 138.926 303.14)" fill="white" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="13" font-weight="bold" letter-spacing="0em"><tspan x="0" y="14.0432">SHORT</tspan></text>
 </g>

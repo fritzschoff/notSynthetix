@@ -803,7 +803,7 @@
 <text transform="translate(28 80)" fill="white" xml:space="preserve" style="white-space: pre" font-family="Misto" font-size="22" letter-spacing="0em"><tspan x="0" y="20.87">{PLACEHOLDER_PRICE} USD</tspan></text>
 <text transform="translate(373 164) rotate(90)" fill="white" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="20" font-weight="800" letter-spacing="0em"><tspan x="0" y="21.2588">{PLACEHOLDER_SIZE} sUSD</tspan></text>
 <g style="mix-blend-mode:soft-light">
-<text transform="matrix(0.707107 -0.707107 0.258746 0.965945 63 328.856)" fill="white" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="12" letter-spacing="0em"><tspan x="0" y="12.6553">id - 19290684652</tspan></text>
+<text transform="matrix(0.707107 -0.707107 0.258746 0.965945 63 328.856)" fill="white" xml:space="preserve" style="white-space: pre" font-family="Open Sans" font-size="12" letter-spacing="0em"><tspan x="0" y="12.6553">addr - {PLACEHOLDER_ADDR}</tspan></text>
 </g>
 </g>
 <defs>
