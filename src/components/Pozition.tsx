@@ -6,7 +6,7 @@ export default function Pozition() {
   return (
     <div className="pozitionContainer">
       <h1>
-        <div className="greyCircles"></div>MY Pozition
+        <div className="greyCircles"></div>My Pozition
         <div className="greyCircles"></div>
       </h1>
       <div className="spacer"></div>

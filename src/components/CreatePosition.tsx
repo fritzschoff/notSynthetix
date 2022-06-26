@@ -1,9 +1,10 @@
-import { useConnectWallet } from '../context/useConnectWalletContext';
 import { useForm } from 'react-hook-form';
 import { markets } from '../constants/markets';
 import './CreatePosition.css';
 import { useEffect, useState } from 'react';
 import BackButton from './BackButton';
+import useNewPosition from '../hooks/useNewPosition';
+import { useConnectWallet } from '../context/useConnectWalletContext';
 
 export default function CreatePosition() {
   const [prices, setPrices] = useState<null | {
@@ -11,18 +12,17 @@ export default function CreatePosition() {
     bitcoin: number;
     ethereum: number;
   }>();
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
+  const { connector } = useConnectWallet();
+  const { calcDelta, approve, hasAllowance } = useNewPosition();
+  const [allowance, setAllowance] = useState(false);
   const [typeOfPosition, setTypeOfPosition] = useState<'long' | 'short'>(
     'long'
   );
   const [leverage, setLeverage] = useState<1 | 2 | 5 | 10>(1);
-  const { connector } = useConnectWallet();
-  const onSubmit = (data: any) => console.log(data, typeOfPosition, leverage);
+  const onSubmit = (data: any) => {
+    calcDelta({ ...data, leverage, side: typeOfPosition });
+  };
 
   useEffect(() => {
     const init = async () => {
@@ -47,17 +47,38 @@ export default function CreatePosition() {
     init();
   }, []);
 
+  useEffect(() => {
+    if (connector) {
+      hasAllowance().then((data) => setAllowance(data));
+    }
+  }, [hasAllowance, connector]);
+
+  const handleApprove = () => {
+    approve().then(() => hasAllowance().then((data) => setAllowance(data)));
+  };
+
   return (
     <>
       <div className="createPositionHeadline">
         <BackButton />
         <h1>Create new Pozition</h1>
       </div>
+      <div className="priceWrapper">
+        <div className="price">
+          <img src="/eth.png" width={32} height={32} />${prices?.ethereum}
+        </div>
+        <div className="price">
+          <img src="/bitcoin.png" width={32} height={32} />${prices?.bitcoin}
+        </div>
+        <div className="price">
+          <img src="/link.png" width={32} height={32} />${prices?.link}
+        </div>
+      </div>
       <div className="newPositionForm">
         <select {...register('market')}>
+          <option value={markets.FuturesMarketLINK}>LINK</option>
           <option value={markets.FuturesMarketETH}>ETH</option>
           <option value={markets.FuturesMarketBTC}>BTC</option>
-          <option value={markets.FuturesMarketLINK}>LINK</option>
         </select>
         <input placeholder="$ Enter Amount" {...register('amount')} />
         <div className="buttonContainer">
@@ -65,35 +86,80 @@ export default function CreatePosition() {
             className="longButton"
             onClick={() => setTypeOfPosition('long')}
           >
-            Long
+            {typeOfPosition === 'long' ? 'Long - Active' : 'Long'}
           </button>
           <button
             className="shortButton"
             onClick={() => setTypeOfPosition('short')}
           >
-            Short
+            {typeOfPosition === 'short' ? 'Short - Active' : 'Short'}
           </button>
         </div>
         <div className="buttonContainer">
-          <button className="leverageButton" onClick={() => setLeverage(1)}>
-            1x
-          </button>
-          <button className="leverageButton" onClick={() => setLeverage(2)}>
-            2x
-          </button>
-          <button className="leverageButton" onClick={() => setLeverage(5)}>
-            5x
-          </button>
-          <button className="leverageButton" onClick={() => setLeverage(10)}>
-            10x
-          </button>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              position: 'relative',
+            }}
+          >
+            <button className="leverageButton" onClick={() => setLeverage(1)}>
+              1x
+            </button>
+            {leverage === 1 && <span className="highlight"></span>}
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              position: 'relative',
+            }}
+          >
+            <button className="leverageButton" onClick={() => setLeverage(2)}>
+              2x
+            </button>
+            {leverage === 2 && <span className="highlight"></span>}
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              position: 'relative',
+            }}
+          >
+            <button className="leverageButton" onClick={() => setLeverage(5)}>
+              5x
+            </button>
+            {leverage === 5 && <span className="highlight"></span>}
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              position: 'relative',
+            }}
+          >
+            <button className="leverageButton" onClick={() => setLeverage(10)}>
+              10x
+            </button>
+            {leverage === 10 && <span className="highlight"></span>}
+          </div>
         </div>
 
-        <button onClick={handleSubmit(onSubmit)} className="submitButton">
-          Submit
-        </button>
+        {allowance ? (
+          <button onClick={handleSubmit(onSubmit)} className="submitButton">
+            Submit
+          </button>
+        ) : (
+          <button onClick={handleApprove} className="submitButton">
+            Approve
+          </button>
+        )}
       </div>
-      <div>{JSON.stringify(prices)}</div>
     </>
   );
 }

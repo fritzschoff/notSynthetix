@@ -5,18 +5,18 @@ import './ConnectWallet.css';
 import { Link } from 'react-router-dom';
 
 export default function ConnectWallet() {
-  const { setConnector, connector } = useConnectWallet();
+  const { setConnector, connector, chainId } = useConnectWallet();
   const handleOnClick = () => {
     if (!connector) {
       const connector = new WalletConnect({
-        bridge: 'https://bridge.walletconnect.org', // Required
+        bridge: 'https://bridge.walletconnect.org',
         qrcodeModal: QRCodeModal,
       });
       setConnector(connector);
     }
   };
 
-  if (connector) {
+  if (chainId && connector) {
     return (
       <Link to="/profile" className="connectLink">
         {connector.accounts[0]

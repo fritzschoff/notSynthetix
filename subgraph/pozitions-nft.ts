@@ -3,22 +3,22 @@ import {
   PositionClose,
   PositionOpen,
 } from '../generated/PozitionsNFT/PozitionsNFT';
+import { BigInt } from '@graphprotocol/graph-ts';
 
-export function PozitionMinted(event: PositionOpen): void {
-  const position = new PositionOpened(
-    event.params.trader.toString().concat(event.address.toString())
-  );
-  position.size = event.params.size;
-  position.trader = event.params.trader;
-  position.margin = event.params.margin;
-  position.market = event.params.market;
-  position.save();
+export function handlePozitionMinted(event: PositionOpen): void {
+  const positionEvent = new PositionOpened(event.params.position.toString());
+  positionEvent.size = event.params.size;
+  positionEvent.trader = event.params.trader;
+  positionEvent.margin = event.params.margin;
+  positionEvent.market = event.params.market;
+  positionEvent.position = event.params.position;
+  positionEvent.save();
 }
 
-export function PozitionWithdrawal(event: PositionClose): void {
-  const position = PositionOpened.load(
-    event.params.trader.toString().concat(event.address.toString())
-  );
+export function handlePozitionWithdrawal(event: PositionClose): void {
+  const position = PositionOpened.load(event.params.position.toString());
   if (position) {
+    position.margin = new BigInt(0);
+    position.save();
   }
 }

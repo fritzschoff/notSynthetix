@@ -42,13 +42,13 @@ export class PositionOpened extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get position(): BigInt {
+  get position(): Bytes {
     let value = this.get("position");
-    return value!.toBigInt();
+    return value!.toBytes();
   }
 
-  set position(value: BigInt) {
-    this.set("position", Value.fromBigInt(value));
+  set position(value: Bytes) {
+    this.set("position", Value.fromBytes(value));
   }
 
   get size(): BigInt {
