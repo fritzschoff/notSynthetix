@@ -76,9 +76,9 @@ export default function CreatePosition() {
       </div>
       <div className="newPositionForm">
         <select {...register('market')}>
+          <option value={markets.FuturesMarketLINK}>LINK</option>
           <option value={markets.FuturesMarketETH}>ETH</option>
           <option value={markets.FuturesMarketBTC}>BTC</option>
-          <option value={markets.FuturesMarketLINK}>LINK</option>
         </select>
         <input placeholder="$ Enter Amount" {...register('amount')} />
         <div className="buttonContainer">
@@ -86,28 +86,68 @@ export default function CreatePosition() {
             className="longButton"
             onClick={() => setTypeOfPosition('long')}
           >
-            Long
+            {typeOfPosition === 'long' ? 'Long - Active' : 'Long'}
           </button>
           <button
             className="shortButton"
             onClick={() => setTypeOfPosition('short')}
           >
-            Short
+            {typeOfPosition === 'short' ? 'Short - Active' : 'Short'}
           </button>
         </div>
         <div className="buttonContainer">
-          <button className="leverageButton" onClick={() => setLeverage(1)}>
-            1x
-          </button>
-          <button className="leverageButton" onClick={() => setLeverage(2)}>
-            2x
-          </button>
-          <button className="leverageButton" onClick={() => setLeverage(5)}>
-            5x
-          </button>
-          <button className="leverageButton" onClick={() => setLeverage(10)}>
-            10x
-          </button>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              position: 'relative',
+            }}
+          >
+            <button className="leverageButton" onClick={() => setLeverage(1)}>
+              1x
+            </button>
+            {leverage === 1 && <span className="highlight"></span>}
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              position: 'relative',
+            }}
+          >
+            <button className="leverageButton" onClick={() => setLeverage(2)}>
+              2x
+            </button>
+            {leverage === 2 && <span className="highlight"></span>}
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              position: 'relative',
+            }}
+          >
+            <button className="leverageButton" onClick={() => setLeverage(5)}>
+              5x
+            </button>
+            {leverage === 5 && <span className="highlight"></span>}
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              position: 'relative',
+            }}
+          >
+            <button className="leverageButton" onClick={() => setLeverage(10)}>
+              10x
+            </button>
+            {leverage === 10 && <span className="highlight"></span>}
+          </div>
         </div>
 
         {allowance ? (

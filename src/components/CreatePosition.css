@@ -104,3 +104,11 @@
 .price img {
   margin-right: 8px;
 }
+
+.highlight {
+  background-color: var(--primary);
+  width: 30px;
+  height: 1px;
+  position: absolute;
+  bottom: 10px;
+}
