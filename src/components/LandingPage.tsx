@@ -16,11 +16,10 @@ export default function LandingPage() {
   useEffect(() => {
     axios(graphQueryConfig).then((res) => {
       res.data.data.positionOpeneds.map((obj: { position: string }) => {
-        new Contract(obj.position, abi, provider[(chainId as 69 | 10) || 69]!)
+        new Contract(obj.position, abi, provider[(chainId as 69 | 10) || 10]!)
           .tokenURI(1)
           .then((uri: string) => {
             axios({ method: 'GET', url: uri }).then((obj: any) => {
-              console.log(obj.data.image);
               setUris((state) => [...state, obj.data.image]);
             });
           });
