@@ -3,11 +3,11 @@ schema:
   file: schema.graphql
 dataSources:
   - kind: ethereum
-    name: PozitionsNFT
+    name: pozitionsMainnet
     network: optimism-kovan
     source:
-      address: "0x3A38D3012C8E30AE9F1daf9dC44BAB0fd3c6d37B"
-      abi: PozitionsNFT
+      address: "0xf2B3bA6fC3D3de34DC022Bb565EA00ef3a7d45f5"
+      abi: PozitionsNFTMainnet
       startBlock: 4200000
     mapping:
       kind: ethereum/events
@@ -16,11 +16,11 @@ dataSources:
       entities:
         - PositionOpened
       abis:
-        - name: PozitionsNFT
-          file: PozitionsNFT/src/abis/PozitionsNFT.json
+        - name: PozitionsNFTMainnet
+          file: pozitionsMainnet/src/abis/FuturesPositionsManager.json
       eventHandlers:
         - event: PositionOpen(address,uint256,uint256,address,address)
           handler: handlePozitionMinted
         - event: PositionClose(address,address,address)
           handler: handlePozitionWithdrawal
-      file: PozitionsNFT/PozitionsNFT.wasm
+      file: pozitionsMainnet/pozitionsMainnet.wasm

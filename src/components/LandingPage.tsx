@@ -20,6 +20,7 @@ export default function LandingPage() {
           .tokenURI(1)
           .then((uri: string) => {
             axios({ method: 'GET', url: uri }).then((obj: any) => {
+              console.log(obj.data.image);
               setUris((state) => [...state, obj.data.image]);
             });
           });
