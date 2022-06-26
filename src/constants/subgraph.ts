@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
 
 export const URL =
-  'https://api.thegraph.com/subgraphs/name/fritzschoff/pozitions';
+  'https://api.thegraph.com/subgraphs/name/fritzschoff/pozitionsmainnet';
 
 export const graphQueryConfig: AxiosRequestConfig = {
   url: URL,

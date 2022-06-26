@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: pozitionsMainnet
-    network: optimism-kovan
+    network: optimism
     source:
       address: "0xf2B3bA6fC3D3de34DC022Bb565EA00ef3a7d45f5"
       abi: PozitionsNFTMainnet
-      startBlock: 4200000
+      startBlock: 13000000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
