@@ -8,10 +8,16 @@
   border-radius: 24px;
   padding: 50px;
 }
-
-.newPositionForm input {
+.newPositionForm select {
   outline: 0;
-  border: 0;
+  background-color: transparent;
+  color: #b9bfc7;
+  margin: 8px 0px;
+  border: 2px solid #b9bfc7;
+  border-radius: 48px;
+  padding: 8px;
+  cursor: pointer;
+  -webkit-appearance: none;
 }
 
 .createPositionHeadline {
@@ -20,6 +26,8 @@
 }
 
 .newPositionForm input {
+  outline: 0;
+  border: 0;
   background: transparent;
   border: 2px solid #b9bfc7;
   color: #b9bfc7;
