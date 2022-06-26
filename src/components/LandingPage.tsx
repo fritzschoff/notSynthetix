@@ -73,7 +73,7 @@ export default function LandingPage() {
               viewBox="0 0 27 28"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              style={{ marginLeft: '16px' }}
+              style={{ marginLeft: '16px', marginRight: '10px' }}
             >
               <rect
                 x="14.3477"

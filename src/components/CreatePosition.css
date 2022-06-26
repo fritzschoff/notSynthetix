@@ -39,28 +39,21 @@
 .longButton {
   outline: 0;
   border-radius: 24px;
-  border: 0;
   width: 200px;
   padding: 8px;
-  background: radial-gradient(
-    70.99% 70.99% at 35.8% 29.01%,
-    #9fff8f 0%,
-    #1abb00 100%
-  );
+  border: 2px solid var(--secondary);
+  background: transparent;
+  color: var(--secondary);
 }
 
 .shortButton {
   outline: 0;
   border-radius: 24px;
   width: 200px;
-  border: 0;
   padding: 8px;
-  background: radial-gradient(
-      70.99% 70.99% at 35.8% 29.01%,
-      #feb3b3 0%,
-      #ff0000 100%
-    ),
-    linear-gradient(270deg, #ffffff 0%, #b8b6cc 100%);
+  border: 2px solid var(--secondary);
+  background: transparent;
+  color: var(--secondary);
 }
 
 .buttonContainer {
@@ -110,5 +103,6 @@
   width: 30px;
   height: 1px;
   position: absolute;
-  bottom: 10px;
+  bottom: 20px;
+  border-radius: 48px;
 }

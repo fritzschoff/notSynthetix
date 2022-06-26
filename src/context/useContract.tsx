@@ -25,8 +25,6 @@ const ContractContext = createContext<Contracts>({
   },
 });
 
-export const KovanFactoryManager = '0x78fbe6B1DD9662543682f2f4158Bce858C38e21B';
-
 export const useContract = () => useContext(ContractContext);
 
 export function ContractProvider({ children }: PropsWithChildren<{}>) {
@@ -35,7 +33,7 @@ export function ContractProvider({ children }: PropsWithChildren<{}>) {
       value={{
         69: {
           FuturesContract: new Contract(
-            '0x78fbe6B1DD9662543682f2f4158Bce858C38e21B',
+            '0x3A38D3012C8E30AE9F1daf9dC44BAB0fd3c6d37B',
             abi
           ),
           sUSD: new Contract(
@@ -46,7 +44,7 @@ export function ContractProvider({ children }: PropsWithChildren<{}>) {
         10: {
           // TODO @MF update address to mainnet one
           FuturesContract: new Contract(
-            '0x78fbe6B1DD9662543682f2f4158Bce858C38e21B',
+            '0x3A38D3012C8E30AE9F1daf9dC44BAB0fd3c6d37B',
             abi
           ),
           sUSD: new Contract(

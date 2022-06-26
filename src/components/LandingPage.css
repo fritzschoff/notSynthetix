@@ -64,4 +64,5 @@
 .exploreButton {
   align-self: flex-start;
   margin-top: 16px;
+  padding-left: 10px;
 }

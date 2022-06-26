@@ -1,6 +1,6 @@
 .connectButtonWrapper {
-  background: linear-gradient(270deg, #dbedf3 0%, #8ec7da 100%);
-  padding: 3px;
+  border: 2px solid var(--secondary);
+  padding: 8px;
   width: fit-content;
   border-radius: 48px;
   display: flex;
@@ -17,12 +17,13 @@
   outline: 0;
   border: 0px;
   border-radius: 48px;
-  background-color: black;
+  background: transparent;
   cursor: pointer;
 }
 
 .buttonText {
   color: white;
+  font-size: 0.8rem;
 }
 
 .connectLink {
