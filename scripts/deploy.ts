@@ -1,20 +1,20 @@
-import { ethers } from "hardhat";
+import { ethers } from 'hardhat';
 
 const main = async () => {
-  const baseURI = "https://kovan-optimistic.etherscan.io/address";
+  const baseURI = 'https://optimistic.etherscan.io/address';
   const addresses = {
-    AddressResolver: "0xb08b62e1cdfd37eCCd69A9ACe67322CCF801b3A6",
+    AddressResolver: '0x95A6a3f44a70172E7d50a9e28c85Dfd712756B8C',
   };
 
   const FuturesNFTPositionF = await ethers.getContractFactory(
-    "FuturesNFTPosition"
+    'FuturesNFTPosition'
   );
   const FuturesNFTPositionC = await FuturesNFTPositionF.deploy();
   await FuturesNFTPositionC.deployed();
   console.log(`Deployed FuturesNFTPosition at ${FuturesNFTPositionC.address}`);
 
   const FuturesNFTPositionFactoryF = await ethers.getContractFactory(
-    "FuturesNFTPositionFactory"
+    'FuturesNFTPositionFactory'
   );
   const FuturesNFTPositionFactoryC = await FuturesNFTPositionFactoryF.deploy(
     FuturesNFTPositionC.address
@@ -25,7 +25,7 @@ const main = async () => {
   );
 
   const FuturesPositionsManagerF = await ethers.getContractFactory(
-    "FuturesPositionsManager"
+    'FuturesPositionsManager'
   );
 
   const FuturesPositionsManagerC = await FuturesPositionsManagerF.deploy(

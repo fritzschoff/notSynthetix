@@ -60,19 +60,16 @@ export function ContractProvider({ children }: PropsWithChildren<{}>) {
           ),
         },
         10: {
-          // TODO @MF update address to mainnet one
           FuturesPositionContract: new Contract(
-            '0xcE156F8eEAA95bB7B172779aC1d6492Ba5B58fB1',
+            '0x9d157324BC8f4Feb6203423d7FCb664e6AAF725c',
             abi
           ),
-          // TODO @MF update address to mainnet one
           FuturesPositionFactory: new Contract(
-            '0xDFE0b78aBa2321fB8f7dbc8950831693aA791138',
+            '0x67E735966b69AC84aa9F58b66d847abF743D48A8',
             abiFactory
           ),
-          // TODO @MF update address to mainnet one
           FuturesPositionManager: new Contract(
-            '0x3A38D3012C8E30AE9F1daf9dC44BAB0fd3c6d37B',
+            '0xf2B3bA6fC3D3de34DC022Bb565EA00ef3a7d45f5',
             abiManager
           ),
           sUSD: new Contract(
