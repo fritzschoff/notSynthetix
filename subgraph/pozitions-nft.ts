@@ -6,9 +6,7 @@ import {
 import { BigInt } from '@graphprotocol/graph-ts';
 
 export function handlePozitionMinted(event: PositionOpen): void {
-  const positionEvent = new PositionOpened(
-    event.params.trader.toHex().concat(event.address.toHex())
-  );
+  const positionEvent = new PositionOpened(event.params.position.toString());
   positionEvent.size = event.params.size;
   positionEvent.trader = event.params.trader;
   positionEvent.margin = event.params.margin;
@@ -18,9 +16,7 @@ export function handlePozitionMinted(event: PositionOpen): void {
 }
 
 export function handlePozitionWithdrawal(event: PositionClose): void {
-  const position = PositionOpened.load(
-    event.params.trader.toHex().concat(event.address.toHex())
-  );
+  const position = PositionOpened.load(event.params.position.toString());
   if (position) {
     position.margin = new BigInt(0);
     position.save();
